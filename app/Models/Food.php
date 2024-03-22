@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Food extends Model
 {
+    public $timestamps = false;
     protected $fillable = [
         'Name',
         'Description',

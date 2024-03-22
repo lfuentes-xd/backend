@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FoodGroup;
+use App\Models\favorite;
 use Illuminate\Http\Request;
 
-class FoodGroupController extends Controller
+class FavoriteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class FoodGroupController extends Controller
     public function index()
     {
         //
-        $foodgroups = FoodGroup::all();
-        return $foodgroups;
+        $favorite = favorite::all();
+        return $favorite; 
     }
 
     /**
@@ -23,6 +23,7 @@ class FoodGroupController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -32,23 +33,26 @@ class FoodGroupController extends Controller
     {
         //
         try{
-            $request -> validate([
-                'Name'=> 'required'
+            $request-> validate([
+                'IdUserFK'=>'required',
+                'IdFoodFK'=>'required'
             ]);
-            $food_groups=FoodGroup::create([
-                'Name'=>$request->Name
+            $favorite = favorite::create([
+                'IdUserFK'=>$request->IdUserFK,
+                'IdFoodFK'=>$request->IdFoodFK
             ]);
-            return response()->json(["success" => 'Product stored: ' . $food_groups], 200);
+            return response()->json(["success" => 'Product stored: ' . $favorite], 200);
+
         }catch(Exception $e){
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
-
         }
+       
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(FoodGroup $foodGroup)
+    public function show(favorite $favorite)
     {
         //
     }
@@ -56,7 +60,7 @@ class FoodGroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FoodGroup $foodGroup)
+    public function edit(favorite $favorite)
     {
         //
     }
@@ -68,18 +72,20 @@ class FoodGroupController extends Controller
     {
         //
         try{
-            $FoodGroup = FoodGroup::findOrFail($id);
-            $request -> validate([
-                'Name'=>'required'
-            ]); 
-            $FoodGroup->update([
-                'Name'=>$request->Name
+            $favorite=favorite::findOrFail($id);
+            $request-> validate([
+                'IdUserFK'=>'required',
+                'IdFoodFK'=>'required'
             ]);
-            return response()->json(["success" => 'Product stored: '. $FoodGroup], 200);
-
+            $favorite->update([
+                'IdUserFK'=>$request->IdUserFK,
+                'IdFoodFK'=>$request->IdFoodFK
+            ]);
+            return response()->json(["success" => 'Product favorite: ' . $favorite], 200);
 
         }catch(Exception $e){
-            return response()->json(['error' => 'An error occurred when trying to Update: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+
 
         }
     }
@@ -87,16 +93,15 @@ class FoodGroupController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(String $id)
+    public function destroy(favorite $favorite, String $id)
     {
         //
-        
         try{
-            
-            FoodGroup::destroy($id);
-            return response()->json(["success" => 'Product deleted: ' ], 200);
+            favorite::destroy($id);
+            return response()->json(['the favorite was deleted']);
         }catch(Exception $e){
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+
         }
     }
 }

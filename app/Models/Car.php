@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shopping extends Model
+class Car extends Model
 {
-    use HasFactory;
-
     public $timestamps = false;
 
     protected $fillable = [
-        'Quantity',
         'IdUserFK',
         'IdFoodFK'
     ];
+    use HasFactory;
 }

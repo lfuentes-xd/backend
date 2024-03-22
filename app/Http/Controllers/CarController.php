@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FoodGroup;
+use App\Models\Car;
 use Illuminate\Http\Request;
 
-class FoodGroupController extends Controller
+class CarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class FoodGroupController extends Controller
     public function index()
     {
         //
-        $foodgroups = FoodGroup::all();
-        return $foodgroups;
+        $Car = Car::all();
+        return $Car; 
     }
 
     /**
@@ -32,23 +32,25 @@ class FoodGroupController extends Controller
     {
         //
         try{
-            $request -> validate([
-                'Name'=> 'required'
+            $request-> validate([
+                'IdUserFK'=>'required',
+                'IdFoodFK'=>'required'
             ]);
-            $food_groups=FoodGroup::create([
-                'Name'=>$request->Name
+            $Car = Car::create([
+                'IdUserFK'=>$request->IdUserFK,
+                'IdFoodFK'=>$request->IdFoodFK
             ]);
-            return response()->json(["success" => 'Product stored: ' . $food_groups], 200);
+            return response()->json(["success" => 'Product stored: ' . $Car], 200);
+
         }catch(Exception $e){
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
-
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(FoodGroup $foodGroup)
+    public function show(Car $car)
     {
         //
     }
@@ -56,7 +58,7 @@ class FoodGroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FoodGroup $foodGroup)
+    public function edit(Car $car)
     {
         //
     }
@@ -64,22 +66,24 @@ class FoodGroupController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, String $id)
+    public function update(Request $request, Car $car, String $id)
     {
         //
         try{
-            $FoodGroup = FoodGroup::findOrFail($id);
-            $request -> validate([
-                'Name'=>'required'
-            ]); 
-            $FoodGroup->update([
-                'Name'=>$request->Name
+            $Car=Car::findOrFail($id);
+            $request-> validate([
+                'IdUserFK'=>'required',
+                'IdFoodFK'=>'required'
             ]);
-            return response()->json(["success" => 'Product stored: '. $FoodGroup], 200);
-
+            $Car->update([
+                'IdUserFK'=>$request->IdUserFK,
+                'IdFoodFK'=>$request->IdFoodFK
+            ]);
+            return response()->json(["success" => 'Product favorite: ' . $Car], 200);
 
         }catch(Exception $e){
-            return response()->json(['error' => 'An error occurred when trying to Update: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+
 
         }
     }
@@ -87,16 +91,15 @@ class FoodGroupController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(String $id)
+    public function destroy(Car $car, String $id)
     {
         //
-        
         try{
-            
-            FoodGroup::destroy($id);
-            return response()->json(["success" => 'Product deleted: ' ], 200);
+            Car::destroy($id);
+            return response()->json(['the Car was deleted']);
         }catch(Exception $e){
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+
         }
     }
 }

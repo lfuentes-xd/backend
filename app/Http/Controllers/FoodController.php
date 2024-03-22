@@ -13,6 +13,11 @@ class FoodController extends Controller
     public function index()
     {
         //
+       
+            $food = Food::all();
+            return $food;
+        
+        
     }
 
     /**
@@ -29,6 +34,24 @@ class FoodController extends Controller
     public function store(Request $request)
     {
         //
+        try{
+            $request -> validate([
+                'Name'=> 'required',
+                'Description'=>'required',
+                'Price'=>'required',
+                'idFoodGroupFK'=>'required'
+    
+            ]);
+            $food = food::create([
+                'Name'=> $request->Name,
+                'Description'=> $request->Description,
+                'Price'=> $request->Price,
+                'idFoodGroupFK'=> $request->idFoodGroupFK
+            ]);
+            return response()->json(["success" => 'Product stored: ' . $food], 200);
+        }catch(Exception $e){
+            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -50,16 +73,43 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Food $food)
+    public function update(Request $request, String $id)
     {
         //
+        try{
+            $Food = Food::findOrFail($id);
+            $request->validate([
+                'Name'=> 'required',
+                'Description'=>'required',
+                'Price'=>'required',
+                'idFoodGroupFK'=>'required'
+            ]);
+            $Food->Update([
+                'Name'=>$request->Name,
+                'Description'=> $request->Description,
+                'Price'=> $request->Price,
+                'idFoodGroupFK'=> $request->idFoodGroupFK
+            ]);
+            return response()->json(["success" => 'Product stored: ' . $Food], 200);
+
+        }catch(Exception $e){
+            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Food $food)
+    public function destroy(Food $food, String $id)
     {
         //
+        try{
+            Food::destroy($id);
+            return response()->json(['the food was deleted']);
+        }catch(Exception $e){
+            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+
+        }
     }
 }

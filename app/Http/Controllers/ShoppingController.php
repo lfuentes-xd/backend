@@ -13,6 +13,8 @@ class ShoppingController extends Controller
     public function index()
     {
         //
+        $Shopping = Shopping::all();
+        return $Shopping;
     }
 
     /**
@@ -29,6 +31,24 @@ class ShoppingController extends Controller
     public function store(Request $request)
     {
         //
+        try{
+            $request -> validate([
+                
+                'Quantity'=> 'required',
+                'IdUserFK'=> 'required',
+                'IdFoodFK'=> 'required'
+            ]);
+            $Shopping=Shopping::create([
+                
+                'Quantity'=> $request->Quantity,
+                'IdUserFK'=> $request->IdUserFK,
+                'IdFoodFK'=>  $request->IdFoodFK
+            ]);
+            return response()->json(["success" => 'Product stored: ' . $Shopping], 200);
+        }catch(Exception $e){
+            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+
+        }
     }
 
     /**
@@ -50,9 +70,26 @@ class ShoppingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Shopping $shopping)
+    public function update(Request $request, string $id)
     {
         //
+        try{
+            $Shopping=Shopping::findOrFail($id);
+        $request->validate([
+            'Quantity'=> 'required',
+            'IdUserFK'=> 'required',
+            'IdFoodFK'=> 'required'
+        ]);
+        $Shopping->update([
+            'Quantity'=> $request->Quantity,
+            'IdUserFK'=> $request->IdUserFK,
+            'IdFoodFK'=>  $request->IdFoodFK
+        ]);
+        return response()->json(["success" => 'Product stored: ' . $Shopping], 200);
+        }catch(Exception $e){
+            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+
+        }
     }
 
     /**
@@ -61,5 +98,6 @@ class ShoppingController extends Controller
     public function destroy(Shopping $shopping)
     {
         //
+        Shopping::destroy($id);
     }
 }
