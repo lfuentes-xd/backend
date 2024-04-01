@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -112,7 +113,7 @@ return [
     'faker_locale' => 'en_US',
 
     /*
-    |--------------------------------------------------------------------------
+    |------------------------------j--------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
     |
@@ -156,6 +157,8 @@ return [
     */
 
     'providers' => ServiceProvider::defaultProviders()->merge([
+        Laravel\Passport\PassportServiceProvider::class,
+
         /*
          * Package Service Providers...
          */

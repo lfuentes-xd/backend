@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserAuthenticationController extends Controller
 {
@@ -34,15 +35,16 @@ class UserAuthenticationController extends Controller
             'Password'=>'required'
 
         ]);
-        $user=User::where('email', $request->email)->first();
+        $User=User::where('Email', $request->Email)->first();
 
-        if(!$user|| !Hash::check($request->password, $user->password)){
+        if(!$User|| !Hash::check($request->Password, $User->Password)){
             return response([
                 'message'=>'The provided credential are incorrect'
 
             ], 401);
         }
-        $token=$user->createToken('auth_token')->accessToken;
+        $token=$User->createToken('auth_token')->accessToken;
+        
         return response([
             'token'=> $token
         ]);
@@ -58,6 +60,7 @@ class UserAuthenticationController extends Controller
                 'PhoneNumber'=>'required',
                 'Email'=>'required',
                 'Password'=>'required',
+                'ControlNumber'=>'required',
                 'Rol'=>'required'
             ]);
             $User=User::create([
@@ -66,7 +69,8 @@ class UserAuthenticationController extends Controller
                 'SecondSurname'=>$request->SecondSurname,
                 'PhoneNumber'=>$request->PhoneNumber,
                 'Email'=>$request->Email,
-                'Password'=>$request->Password,
+                'Password'=> Hash::make($request->Password),
+                'ControlNumber'=>$request->ControlNumber,
                 'Rol'=>$request->Rol
             ]);
             return response()->json(["success" => 'Product stored: ' . $User], 200);
@@ -74,6 +78,26 @@ class UserAuthenticationController extends Controller
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
 
         }
+    }
+    public function userauth(){
+        $User = auth()->User();
+
+        if($User){
+            return response()->json([
+                'id'=> $User->id,
+                'Name'=>$User->Name,
+                'FirstSurname'=>$User->FirstSurname,
+                'SecondSurname'=>$User->SecondSurname,
+                'PhoneNumber'=>$User->PhoneNumber,
+                'Email'=>$User->Email,
+                'Password'=> Hash::make($User->Password),
+                'ControlNumber'=>$User->ControlNumber,
+                'Rol'=>$User->Rol
+
+            ]);
+        }
+        return response()->json(['error' => 'Usuario no autenticado'], 401);
+        
     }
 
     /**
@@ -107,6 +131,7 @@ class UserAuthenticationController extends Controller
                 'PhoneNumber'=>'required',
                 'Email'=>'required',
                 'Password'=>'required',
+                'ControlNumber'=>'required',
                 'Rol'=>'required'
             ]);
             $User->update([
@@ -116,6 +141,7 @@ class UserAuthenticationController extends Controller
                 'PhoneNumber'=>$request->PhoneNumber,
                 'Email'=>$request->Email,
                 'Password'=>$request->Password,
+                'ControlNumber'=>$request->ControlNumber,
                 'Rol'=>$request->Rol
             ]);
 

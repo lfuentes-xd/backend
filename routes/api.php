@@ -28,9 +28,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //user 
 Route::get('/UserIndex', [UserAuthenticationController::class, 'index']);//
-Route::post('/store_register', [UserAuthenticationController::class, 'store']);//
+Route::post('/UserLogin', [UserAuthenticationController::class, 'login']);//
+Route::post('/StoreRegister', [UserAuthenticationController::class, 'store_register']);//
 Route::post('/UserUpdate/{id}', [UserAuthenticationController::class, 'update']);//
-Route::post('UserDestroy/{id}',[FoodController::class, 'destroy']);//
+Route::post('UserDestroy/{id}',[UserAuthenticationController::class, 'destroy']);//
+Route::middleware('auth:api')->get('/Userauth', [UserAuthenticationController::class, 'userauth']);
+
 //food
 Route::get('/foodIndex', [FoodController::class, 'index']);//
 Route::post('/foodStore', [FoodController::class, 'store']);//

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('PhoneNumber');
             $table->string('Email')->unique();
             $table->string('Password');
+            $table->string('ControlNumber');
             $table->integer('Rol');
             // $table->rememberToken();
             // $table->timestamps();

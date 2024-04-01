@@ -39,16 +39,23 @@ class FoodController extends Controller
                 'Name'=> 'required',
                 'Description'=>'required',
                 'Price'=>'required',
-                'idFoodGroupFK'=>'required'
+                'idFoodGroupFK'=>'required',
+                'Image'=>'required'
     
             ]);
-            $food = food::create([
-                'Name'=> $request->Name,
-                'Description'=> $request->Description,
-                'Price'=> $request->Price,
-                'idFoodGroupFK'=> $request->idFoodGroupFK
-            ]);
+            if ($request->hasFile('Image')) {
+                // $customFileName = 'mi_archivo_personalizado.' . $request->file('Image')->getClientOriginalExtension();
+                $imagePath = $request->file('Image')->store('Images', 'public');
+                $food = food::create([
+                    'Name'=> $request->Name,
+                    'Description'=> $request->Description,
+                    'Price'=> $request->Price,
+                    'idFoodGroupFK'=> $request->idFoodGroupFK,
+                    'Image' => $imagePath
+                ]);
+            }
             return response()->json(["success" => 'Product stored: ' . $food], 200);
+            
         }catch(Exception $e){
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
         }
@@ -84,13 +91,20 @@ class FoodController extends Controller
                 'Price'=>'required',
                 'idFoodGroupFK'=>'required'
             ]);
-            $Food->Update([
-                'Name'=>$request->Name,
-                'Description'=> $request->Description,
-                'Price'=> $request->Price,
-                'idFoodGroupFK'=> $request->idFoodGroupFK
-            ]);
+            if ($request->hasFile('Image')) {
+                // $customFileName = 'mi_archivo_personalizado.' . $request->file('Image')->getClientOriginalExtension();
+                $imagePath = $request->file('Image')->store('Images', 'public');
+                $Food->Update([
+                    'Name'=>$request->Name,
+                    'Description'=> $request->Description,
+                    'Price'=> $request->Price,
+                    'idFoodGroupFK'=> $request->idFoodGroupFK,
+                    'Image' => $imagePath
+                ]);
+            }
             return response()->json(["success" => 'Product stored: ' . $Food], 200);
+
+            
 
         }catch(Exception $e){
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);

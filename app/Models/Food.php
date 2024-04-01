@@ -14,7 +14,9 @@ class Food extends Model
         'Name',
         'Description',
         'Price',
-        'idFoodGroupFK'
+        'idFoodGroupFK',
+        'Image'
+
     ];
 
     public function Foods(): BelongsTo
