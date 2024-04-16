@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Exception;
 use App\Models\Shopping;
 use Illuminate\Http\Request;
 
@@ -33,13 +33,13 @@ class ShoppingController extends Controller
         //
         try{
             $request -> validate([
-                
+
                 'Quantity'=> 'required',
                 'IdUserFK'=> 'required',
                 'IdFoodFK'=> 'required'
             ]);
             $Shopping=Shopping::create([
-                
+
                 'Quantity'=> $request->Quantity,
                 'IdUserFK'=> $request->IdUserFK,
                 'IdFoodFK'=>  $request->IdFoodFK
@@ -95,7 +95,7 @@ class ShoppingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Shopping $shopping)
+    public function destroy(string $id)
     {
         //
         Shopping::destroy($id);

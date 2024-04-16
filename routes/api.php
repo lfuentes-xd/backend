@@ -7,7 +7,6 @@ use App\Http\Controllers\FoodGroupController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\ShoppingController;
-use App\Http\Controllers\CarController;
 
 
 
@@ -26,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//user 
+//user
 Route::get('/UserIndex', [UserAuthenticationController::class, 'index']);//
 Route::post('/UserLogin', [UserAuthenticationController::class, 'login']);//
 Route::post('/StoreRegister', [UserAuthenticationController::class, 'store_register']);//
@@ -54,10 +53,5 @@ Route::get('/ShoppingIndex', [ShoppingController::class, 'index']);//
 Route::post('/ShoppingStore', [ShoppingController::class, 'store']);//
 Route::post('/ShoppingUpdate/{id}', [ShoppingController::class, 'update']);//
 Route::post('/ShoppingDestroy/{id}', [ShoppingController::class, 'destroy']);//
-//car
-Route::get('/CarIndex', [CarController::class, 'index']);//
-Route::post('/CarStore', [CarController::class, 'store']);//
-Route::post('/CarUpdate/{id}', [CarController::class, 'update']);//
-Route::post('/CarDestroy/{id}', [CarController::class, 'destroy']);//
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class UserAuthenticationController extends Controller
 {
@@ -44,7 +45,7 @@ class UserAuthenticationController extends Controller
             ], 401);
         }
         $token=$User->createToken('auth_token')->accessToken;
-        
+
         return response([
             'token'=> $token
         ]);
@@ -97,13 +98,13 @@ class UserAuthenticationController extends Controller
             ]);
         }
         return response()->json(['error' => 'Usuario no autenticado'], 401);
-        
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(UserAuthentication $userAuthentication)
+    public function show(string $id)
     {
         //
     }
@@ -111,7 +112,7 @@ class UserAuthenticationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UserAuthentication $userAuthentication)
+    public function edit(string $id)
     {
         //
     }
@@ -145,10 +146,10 @@ class UserAuthenticationController extends Controller
                 'Rol'=>$request->Rol
             ]);
 
-            
+
 
             return response()->json(["success" => 'Product stored: ' . $User], 200);
- 
+
 
         }catch(Exception $e){
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
@@ -159,7 +160,7 @@ class UserAuthenticationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserAuthentication $userAuthentication, string $id)
+    public function destroy( string $id)
     {
         //
         try{

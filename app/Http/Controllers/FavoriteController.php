@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\favorite;
 use Illuminate\Http\Request;
+use Exception;
 
 class FavoriteController extends Controller
 {
@@ -14,7 +15,7 @@ class FavoriteController extends Controller
     {
         //
         $favorite = favorite::all();
-        return $favorite; 
+        return $favorite;
     }
 
     /**
@@ -46,7 +47,7 @@ class FavoriteController extends Controller
         }catch(Exception $e){
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
         }
-       
+
     }
 
     /**
