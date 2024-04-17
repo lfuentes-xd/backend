@@ -49,6 +49,7 @@ Route::get('/FavoriteIndex', [FavoriteController::class, 'index']);//
 Route::post('/FavoriteStore', [FavoriteController::class, 'store']);//
 Route::post('/FavoriteUpdate/{id}', [FavoriteController::class, 'update']);//
 Route::post('/FavoriteDestroy/{id}', [FavoriteController::class, 'destroy']);//
+Route::get('/showfav/{userId}', [FavoriteController::class, 'showfav']);
 //shopping
 Route::get('/ShoppingIndex', [ShoppingController::class, 'index']);//
 Route::post('/ShoppingStore', [ShoppingController::class, 'store']);//
@@ -59,5 +60,10 @@ Route::get('/CarIndex', [CarController::class, 'index']);//
 Route::post('/CarStore', [CarController::class, 'store']);//
 Route::post('/CarUpdate/{id}', [CarController::class, 'update']);//
 Route::post('/CarDestroy/{id}', [CarController::class, 'destroy']);//
+
+Route::get('/carr/{userId}', [CarController::class, 'showCarr']);
+
+
+
 
 

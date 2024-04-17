@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('food', function (Blueprint $table) {
             $table->id();
             $table->string('Name');
+            $table->string('Image');
             $table->string('Description');
             $table->integer('Price');
             $table->unsignedBigInteger('idFoodGroupFK');
             $table->foreign('idFoodGroupFK')->references('id')->on('food_groups');
+
         });
     }
 

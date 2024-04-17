@@ -34,31 +34,34 @@ class FoodController extends Controller
     public function store(Request $request)
     {
         //
-        try{
-            $request -> validate([
-                'Name'=> 'required',
-                'Description'=>'required',
-                'Price'=>'required',
-                'idFoodGroupFK'=>'required',
-                'Image'=>'required'
-    
-            ]);
-            if ($request->hasFile('Image')) {
-                // $customFileName = 'mi_archivo_personalizado.' . $request->file('Image')->getClientOriginalExtension();
-                $imagePath = $request->file('Image')->store('Images', 'public');
-                $food = food::create([
-                    'Name'=> $request->Name,
-                    'Description'=> $request->Description,
-                    'Price'=> $request->Price,
-                    'idFoodGroupFK'=> $request->idFoodGroupFK,
-                    'Image' => $imagePath
+        if ($request->hasFile('Image')) {
+            try{
+                $request -> validate([
+                    'Name'=> 'required',
+                    'Description'=>'required',
+                    'Price'=>'required',
+                    'idFoodGroupFK'=>'required',
+                    'Image'=>'required'
+        
                 ]);
+                
+                     $customFileName = 'mi_archivo_personalizado.' . $request->file('Image')->getClientOriginalExtension();
+                    $imagePath = $request->file('Image')->store('resources/Images', 'public');
+                    $food = food::create([
+                        'Name'=> $request->Name,
+                        'Description'=> $request->Description,
+                        'Price'=> $request->Price,
+                        'idFoodGroupFK'=> $request->idFoodGroupFK,
+                        'Image' => $imagePath
+                    ]);
+                
+                return response()->json(["success" => 'Product stored: ' . $food], 200);
+                
+            }catch(Exception $e){
+                return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
             }
-            return response()->json(["success" => 'Product stored: ' . $food], 200);
-            
-        }catch(Exception $e){
-            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
         }
+        
     }
 
     /**
