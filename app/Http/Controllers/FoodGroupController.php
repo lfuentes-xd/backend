@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Exception;
 use App\Models\FoodGroup;
 use Illuminate\Http\Request;
 
@@ -71,7 +71,7 @@ class FoodGroupController extends Controller
             $FoodGroup = FoodGroup::findOrFail($id);
             $request -> validate([
                 'Name'=>'required'
-            ]); 
+            ]);
             $FoodGroup->update([
                 'Name'=>$request->Name
             ]);
@@ -90,9 +90,9 @@ class FoodGroupController extends Controller
     public function destroy(String $id)
     {
         //
-        
+
         try{
-            
+
             FoodGroup::destroy($id);
             return response()->json(["success" => 'Product deleted: ' ], 200);
         }catch(Exception $e){
