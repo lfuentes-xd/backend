@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('Price');
             $table->unsignedBigInteger('idFoodGroupFK');
             $table->foreign('idFoodGroupFK')->references('id')->on('food_groups');
+
         });
     }
 

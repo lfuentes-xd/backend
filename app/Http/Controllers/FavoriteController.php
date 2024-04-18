@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\favorite;
 use Illuminate\Http\Request;
 use Exception;
+use App\Models\User;
+use App\Models\Food;
 
 class FavoriteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function showfav($userId)
+    {
+        $favorite = favorite::where('IdUserFK', $userId)->with('food')->get();
+        return $favorite;
+    }
     public function index()
     {
         //

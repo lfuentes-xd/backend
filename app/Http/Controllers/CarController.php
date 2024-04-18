@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\User;
+use App\Models\Food;
+
+
+
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -10,6 +15,11 @@ class CarController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function showCarr($userId)
+    {
+        $Car = Car::where('IdUserFK', $userId)->with('food')->get();
+        return $Car;
+    }
     public function index()
     {
         //

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FoodController;
@@ -7,7 +8,6 @@ use App\Http\Controllers\FoodGroupController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\ShoppingController;
-
 
 
 /*
@@ -50,10 +50,16 @@ Route::get('/FavoriteIndex', [FavoriteController::class, 'index']);//
 Route::post('/FavoriteStore', [FavoriteController::class, 'store']);//
 Route::post('/FavoriteUpdate/{id}', [FavoriteController::class, 'update']);//
 Route::post('/FavoriteDestroy/{id}', [FavoriteController::class, 'destroy']);//
+Route::get('/showfav/{userId}', [FavoriteController::class, 'showfav']);
 //shopping
 Route::get('/ShoppingIndex', [ShoppingController::class, 'index']);//
 Route::post('/ShoppingStore', [ShoppingController::class, 'store']);//
 Route::post('/ShoppingUpdate/{id}', [ShoppingController::class, 'update']);//
 Route::post('/ShoppingDestroy/{id}', [ShoppingController::class, 'destroy']);//
+
+Route::get('/carr/{userId}', [CarController::class, 'showCarr']);
+
+
+
 
 
