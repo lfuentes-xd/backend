@@ -46,9 +46,11 @@ class UserAuthenticationController extends Controller
         }
         $token=$User->createToken('auth_token')->accessToken;
         $Rol = $User->Rol;
+        $name=$User->Name;
         return response([
             'token'=> $token,
-            'Rol'=>$Rol
+            'Rol'=>$Rol,
+            'name'=>$name
         ]);
     }
     public function store_register(Request $request)
