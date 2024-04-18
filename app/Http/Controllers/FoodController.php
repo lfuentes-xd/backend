@@ -12,7 +12,7 @@ class FoodController extends Controller
     public function index()
     {
         $food = Food::all();
-        return $food;
+        return response()->json($food, 200);
     }
 
     public function create()
@@ -32,7 +32,7 @@ class FoodController extends Controller
                 'Image' => 'required'
             ]);
             if ($request->hasFile('Image')) {
-                $imagePath = $request->file('Image')->store('Images', 'public');
+                $imagePath = $request->file('Image')->store('public');
                 $food = food::create([
                     'Name' => $request->Name,
                     'Description' => $request->Description,
@@ -47,9 +47,10 @@ class FoodController extends Controller
         }
     }
 
-    public function show(Food $food)
+    public function show(string $id)
     {
-        //
+        $food = Food::findOrFail($id);
+        return response()->json($food, 200);
     }
 
     public function edit(Food $food)
@@ -70,7 +71,7 @@ class FoodController extends Controller
             ]);
             if ($request->hasFile('Image')) {
                 // $customFileName = 'mi_archivo_personalizado.' . $request->file('Image')->getClientOriginalExtension();
-                $imagePath = $request->file('Image')->store('Images', 'public');
+                $imagePath = $request->file('Image')->store('public');
                 $Food->Update([
                     'Name' => $request->Name,
                     'Description' => $request->Description,
@@ -85,14 +86,14 @@ class FoodController extends Controller
         }
     }
 
-    public function destroy(Food $food, String $id)
+    public function destroy(String $id)
     {
         //
         try {
             Food::destroy($id);
             return response()->json(['the food was deleted']);
         } catch (Exception $e) {
-            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'An error occurred when trying to delete: ' . $e->getMessage()], 500);
         }
     }
 }
