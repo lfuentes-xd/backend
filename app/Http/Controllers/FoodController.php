@@ -36,7 +36,7 @@ class FoodController extends Controller
                 
                 
                      $customFileName = 'mi_archivo_personalizado.' . $request->file('Image')->getClientOriginalExtension();
-                    $imagePath = $request->file('Image')->store('resources/Images', 'public');
+                    $imagePath = $request->file('Image')->store('', 'public');
                     $food = food::create([
                         'Name'=> $request->Name,
                         'Description'=> $request->Description,
@@ -56,10 +56,12 @@ class FoodController extends Controller
         
     }
 
-    public function show(Food $food)
+    public function show(string $id)
     {
-        //
+        $food = Food::findOrFail($id);
+        return response()->json($food, 200);
     }
+
 
     public function edit(Food $food)
     {
@@ -104,4 +106,5 @@ class FoodController extends Controller
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
         }
     }
+    
 }

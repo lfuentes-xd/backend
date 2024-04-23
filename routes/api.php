@@ -35,6 +35,7 @@ Route::post('UserDestroy/{id}',[UserAuthenticationController::class, 'destroy'])
 Route::middleware('auth:api')->get('/Userauth', [UserAuthenticationController::class, 'userauth']);
 
 //food
+Route::get('/food/{id}', [FoodController::class, 'show']);//
 Route::get('/foodIndex', [FoodController::class, 'index']);//
 Route::post('/foodStore', [FoodController::class, 'store']);//
 Route::post('/FoodUpdate/{id}', [FoodController::class, 'update']);//
