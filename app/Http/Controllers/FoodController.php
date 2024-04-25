@@ -32,7 +32,6 @@ class FoodController extends Controller
                 'Image' => 'required'
             ]);
             if ($request->hasFile('Image')) {
-                $customFileName = 'mi_archivo_personalizado.' . $request->file('Image')->getClientOriginalExtension();
                 $imagePath = $request->file('Image')->store('resources/Images', 'public');
                 $food = food::create([
                     'Name' => $request->Name,
@@ -62,7 +61,6 @@ class FoodController extends Controller
 
     public function update(Request $request, String $id)
     {
-        //
         try {
             $Food = Food::findOrFail($id);
             $request->validate([
@@ -72,17 +70,23 @@ class FoodController extends Controller
                 'idFoodGroupFK' => 'required'
             ]);
             if ($request->hasFile('Image')) {
-                // $customFileName = 'mi_archivo_personalizado.' . $request->file('Image')->getClientOriginalExtension();
                 $imagePath = $request->file('Image')->store('public');
-                $Food->Update([
+                $Food->update([
                     'Name' => $request->Name,
                     'Description' => $request->Description,
                     'Price' => $request->Price,
                     'idFoodGroupFK' => $request->idFoodGroupFK,
                     'Image' => $imagePath
                 ]);
+            } else {
+                $Food->update([
+                    'Name' => $request->Name,
+                    'Description' => $request->Description,
+                    'Price' => $request->Price,
+                    'idFoodGroupFK' => $request->idFoodGroupFK,
+                ]);
             }
-            return response()->json(["success" => 'Product stored: ' . $Food], 200);
+            return response()->json(["success" => 'Product updated: ' . $Food], 200);
         } catch (Exception $e) {
             return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
         }

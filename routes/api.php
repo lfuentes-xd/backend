@@ -38,7 +38,7 @@ Route::get('/foodIndex', [FoodController::class, 'index']);//
 Route::get('/food/{id}', [FoodController::class, 'show']);//
 
 Route::post('/foodStore', [FoodController::class, 'store']);//
-Route::post('/FoodUpdate/{id}', [FoodController::class, 'update']);//
+Route::put('/FoodUpdate/{id}', [FoodController::class, 'update']);//
 Route::post('FoodDestroy/{id}',[FoodController::class, 'destroy']);//
 //foodGroup
 Route::get('/FoodGroupIndex', [FoodGroupController::class, 'index']);//
