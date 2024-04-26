@@ -88,7 +88,7 @@ class FoodController extends Controller
             }
             return response()->json(["success" => 'Product updated: ' . $Food], 200);
         } catch (Exception $e) {
-            return response()->json(['error' => 'An error occurred when trying to store: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'An error occurred when trying to update: ' . $e->getMessage()], 500);
         }
     }
 
