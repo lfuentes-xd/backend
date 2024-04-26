@@ -58,6 +58,8 @@ Route::post('/ShoppingUpdate/{id}', [ShoppingController::class, 'update']);//
 Route::post('/ShoppingDestroy/{id}', [ShoppingController::class, 'destroy']);//
 
 Route::get('/carr/{userId}', [CarController::class, 'showCarr']);
+Route::post('/storecar', [CarController::class, 'store']);
+Route::post('/CarDestroy/{userId}', [CarController::class, 'destroy']);
 
 
 
