@@ -50,6 +50,7 @@ Route::get('/FavoriteIndex', [FavoriteController::class, 'index']);//
 Route::post('/FavoriteStore', [FavoriteController::class, 'store']);//
 Route::post('/FavoriteUpdate/{id}', [FavoriteController::class, 'update']);//
 Route::post('/FavoriteDestroy/{id}', [FavoriteController::class, 'destroy']);//
+Route::post('/Favorite', [FavoriteController::class, 'show']);//
 Route::get('/showfav/{userId}', [FavoriteController::class, 'showfav']);
 //shopping
 Route::get('/ShoppingIndex', [ShoppingController::class, 'index']);//
